@@ -1,9 +1,13 @@
-package com.currency.currencyedittext
+package com.currency.currencyedittext.listener
 
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
+import android.widget.EditText
 import android.widget.Toast
+import com.currency.currencyedittext.ext.extractNumber
+import com.currency.currencyedittext.regex.onlyNumber
+import java.text.DecimalFormat
 
 /**
  * This method is called to notify you that,
@@ -17,24 +21,33 @@ import android.widget.Toast
  * @abstract void	onTextChanged(CharSequence s, int start, int before, int count)
  * This method is called to notify you that, within s, the count characters beginning at start have just replaced old text that had length before.
  */
-class CurrencyWatcher : TextWatcher {
+class CurrencyWatcherListener(
+    private val editView : EditText,
+    private val clearIcon : (Boolean) -> Unit
+) : TextWatcher {
+
+    var beforeChar = ""
     override fun afterTextChanged(char: Editable?) {
-        Log.e("CurrencyWatcher", "afterTextChanged \n=> \nchar : $char ")
     }
 
     override fun beforeTextChanged(char: CharSequence?, start: Int, count: Int, after: Int) {
-        Log.e(
-            "CurrencyWatcher",
-            "beforeTextChanged \n=> \nchar : $char  \nstart : $start  \ncount : $count  \nafter : $after"
-        )
-
+        beforeChar = char.toString()
     }
 
     override fun onTextChanged(char: CharSequence?, start: Int, before: Int, count: Int) {
-        Log.e(
-            "CurrencyWatcher",
-            "onTextChanged \n=> \nchar : $char  \nstart : $start  \nbefore : $before  \ncount  : $count"
-        )
+        char?.toString().let {
+            if(it != beforeChar && it?.isNotEmpty() == true) {
+                it.extractNumber().toDouble().let { value ->
+                    editView.setText(DecimalFormat("###,###").format(value))
+                    //// TODO: 2019-10-12 선택한 포지션 설정
+                    editView.setSelection(editView.length())
+                }
+            }
+        }
+        if(editView.hasFocus()) {
+            clearIcon(editView.length() > 0)
+        }
     }
 
 }
+
