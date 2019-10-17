@@ -1,12 +1,8 @@
-package com.currency.currencyedittext.listener
+package com.currency.currencyedittext
 
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.widget.EditText
-import android.widget.Toast
-import com.currency.currencyedittext.ext.extractNumber
-import com.currency.currencyedittext.regex.onlyNumber
 import java.text.DecimalFormat
 
 /**
@@ -21,7 +17,7 @@ import java.text.DecimalFormat
  * @abstract void	onTextChanged(CharSequence s, int start, int before, int count)
  * This method is called to notify you that, within s, the count characters beginning at start have just replaced old text that had length before.
  */
-class CurrencyWatcherListener(
+class CurrencyEditTextWatcher(
     private val editView : EditText,
     private val clearIcon : (Boolean) -> Unit
 ) : TextWatcher {
@@ -45,7 +41,8 @@ class CurrencyWatcherListener(
             }
         }
         if(editView.hasFocus()) {
-            clearIcon(editView.length() > 0)
+            clearIcon.invoke(editView.length() > 0)
+//            clearIcon(editView.length() > 0)
         }
     }
 

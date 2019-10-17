@@ -1,4 +1,4 @@
-package com.currency.currencyedittext.listener
+package com.currency.currencyedittext
 
 import android.view.View
 import android.widget.EditText

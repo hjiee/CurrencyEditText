@@ -5,20 +5,18 @@ import android.content.res.TypedArray
 import android.text.InputType
 import android.util.AttributeSet
 import android.view.LayoutInflater
-import androidx.appcompat.widget.AppCompatEditText
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.DrawableCompat
-import com.currency.currencyedittext.listener.CurrencyWatcherListener
-import com.currency.currencyedittext.listener.TextFocusListener
-import com.currency.currencyedittext.listener.TouchListener
 import kotlinx.android.synthetic.main.currency.view.*
 
 
 class CurrencyEditText : ConstraintLayout {
 
     private val clearDrawable by lazy {
-        ContextCompat.getDrawable(context, R.drawable.ic_clear_black_24dp)?.let {
+        ContextCompat.getDrawable(context,
+            R.drawable.ic_clear_black_24dp
+        )?.let {
             DrawableCompat.wrap(it)?.apply {
                 setBounds(0, 0, it.intrinsicWidth, it.intrinsicHeight)
                 setOnTouchListener(TouchListener(it))
@@ -57,14 +55,20 @@ class CurrencyEditText : ConstraintLayout {
         edt_money.inputType = InputType.TYPE_CLASS_NUMBER
 
         // Text 변경 이벤트
-        edt_money.addTextChangedListener(CurrencyWatcherListener(edt_money) { setVisibleClearIcon(it) })
+        edt_money.addTextChangedListener(
+            CurrencyEditTextWatcher(
+                edt_money
+            ) { setVisibleClearIcon(it) })
         // Text 포커스 이벤트
-        onFocusChangeListener = TextFocusListener { setVisibleClearIcon(it) }
+        onFocusChangeListener =
+            TextFocusListener { setVisibleClearIcon(it) }
     }
 
     private fun getAttrs(attributeSet: AttributeSet) {
         var typedArray: TypedArray =
-            context.obtainStyledAttributes(attributeSet, R.styleable.CurrencyEditText)
+            context.obtainStyledAttributes(attributeSet,
+                R.styleable.CurrencyEditText
+            )
         setTypeArray(typedArray)
     }
 
@@ -79,10 +83,18 @@ class CurrencyEditText : ConstraintLayout {
     }
 
     private fun setTypeArray(typedArray: TypedArray) {
-//        var preFix = typedArray.getResourceId(R.styleable.CurrencyEditText_preFix,0)
+
+        typedArray.getResourceId(R.styleable.CurrencyEditText_preFix,1)
+        var preFix = typedArray.getString(R.styleable.CurrencyEditText_preFix)
+        when(preFix) {
+
+        }
 //        append(preFix.toString())
 
-        var postFix = typedArray.getString(R.styleable.CurrencyEditText_postFix)
+        var postFix = typedArray.getInt(R.styleable.CurrencyEditText_postFix,0)
+        when(postFix) {
+
+        }
         tv_postfix.text = "원"
 //        append(postFix.toString())
     }

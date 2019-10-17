@@ -1,7 +1,6 @@
-package com.currency.currencyedittext.listener
+package com.currency.currencyedittext
 
 import android.graphics.drawable.Drawable
-import android.util.Log
 import android.view.MotionEvent
 import android.view.View
 import android.widget.EditText
