@@ -1,4 +1,4 @@
-package com.currency.currencyedittext
+package com.currency.example
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle

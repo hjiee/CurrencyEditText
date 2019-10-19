@@ -9,12 +9,14 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.DrawableCompat
 import kotlinx.android.synthetic.main.currency.view.*
+import java.util.*
 
 
 class CurrencyEditText : ConstraintLayout {
 
     private val clearDrawable by lazy {
-        ContextCompat.getDrawable(context,
+        ContextCompat.getDrawable(
+            context,
             R.drawable.ic_clear_black_24dp
         )?.let {
             DrawableCompat.wrap(it)?.apply {
@@ -24,7 +26,7 @@ class CurrencyEditText : ConstraintLayout {
         }
     }
     private val parentView by lazy {
-        LayoutInflater.from(context).inflate(R.layout.currency,this,false)
+        LayoutInflater.from(context).inflate(R.layout.currency, this, false)
     }
 
     constructor(
@@ -52,7 +54,10 @@ class CurrencyEditText : ConstraintLayout {
     private fun initView() {
         addView(parentView)
         setVisibleClearIcon(false)
-        edt_money.inputType = InputType.TYPE_CLASS_NUMBER
+//        edt_money.inputType = InputType.TYPE_CLASS_NUMBER
+        edt_money.inputType = InputType.TYPE_NUMBER_FLAG_DECIMAL
+//        edt_money.inputType = 8194
+
 
         // Text 변경 이벤트
         edt_money.addTextChangedListener(
@@ -66,7 +71,8 @@ class CurrencyEditText : ConstraintLayout {
 
     private fun getAttrs(attributeSet: AttributeSet) {
         var typedArray: TypedArray =
-            context.obtainStyledAttributes(attributeSet,
+            context.obtainStyledAttributes(
+                attributeSet,
                 R.styleable.CurrencyEditText
             )
         setTypeArray(typedArray)
@@ -84,18 +90,25 @@ class CurrencyEditText : ConstraintLayout {
 
     private fun setTypeArray(typedArray: TypedArray) {
 
-        typedArray.getResourceId(R.styleable.CurrencyEditText_preFix,1)
         var preFix = typedArray.getString(R.styleable.CurrencyEditText_preFix)
-        when(preFix) {
+        var postFix = typedArray.getString(R.styleable.CurrencyEditText_postFix)
 
-        }
-//        append(preFix.toString())
+        CurrencyEnum.values()
+            .map {
+                when (it.code) {
+                    postFix -> {
+                        tv_postfix.text = it.currencyName
+                    }
+                }
+                when (it.code) {
+                    preFix -> {
+                        tv_prefix.text = it.symbol
 
-        var postFix = typedArray.getInt(R.styleable.CurrencyEditText_postFix,0)
-        when(postFix) {
+                    }
+                }
+            }
 
-        }
-        tv_postfix.text = "원"
+
 //        append(postFix.toString())
     }
 
