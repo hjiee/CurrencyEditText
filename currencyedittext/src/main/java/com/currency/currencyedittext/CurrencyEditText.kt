@@ -5,6 +5,8 @@ import android.content.res.TypedArray
 import android.text.InputType
 import android.util.AttributeSet
 import android.view.LayoutInflater
+import android.view.View
+import android.widget.EditText
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.DrawableCompat
@@ -14,15 +16,10 @@ import java.util.*
 
 class CurrencyEditText : ConstraintLayout {
 
-    private val clearDrawable by lazy {
-        ContextCompat.getDrawable(
-            context,
-            R.drawable.ic_clear_black_24dp
-        )?.let {
-            DrawableCompat.wrap(it)?.apply {
-                setBounds(0, 0, it.intrinsicWidth, it.intrinsicHeight)
-                setOnTouchListener(TouchListener(it))
-            }
+
+    private val editText by lazy {
+        findViewById<EditText>(R.id.edt_money).apply {
+            setText("0")
         }
     }
     private val parentView by lazy {
@@ -54,16 +51,14 @@ class CurrencyEditText : ConstraintLayout {
     private fun initView() {
         addView(parentView)
         setVisibleClearIcon(false)
-//        edt_money.inputType = InputType.TYPE_CLASS_NUMBER
-        edt_money.inputType = InputType.TYPE_NUMBER_FLAG_DECIMAL
-//        edt_money.inputType = 8194
+        editText.inputType = 8194 // Number Decimal
 
 
         // Text 변경 이벤트
-        edt_money.addTextChangedListener(
-            CurrencyEditTextWatcher(
-                edt_money
-            ) { setVisibleClearIcon(it) })
+        editText.addTextChangedListener(
+            CurrencyEditTextWatcher(editText) {
+                setVisibleClearIcon(it)
+            })
         // Text 포커스 이벤트
         onFocusChangeListener =
             TextFocusListener { setVisibleClearIcon(it) }
@@ -89,7 +84,6 @@ class CurrencyEditText : ConstraintLayout {
     }
 
     private fun setTypeArray(typedArray: TypedArray) {
-
         var preFix = typedArray.getString(R.styleable.CurrencyEditText_preFix)
         var postFix = typedArray.getString(R.styleable.CurrencyEditText_postFix)
 
@@ -103,17 +97,15 @@ class CurrencyEditText : ConstraintLayout {
                 when (it.code) {
                     preFix -> {
                         tv_prefix.text = it.symbol
-
                     }
                 }
             }
-
-
-//        append(postFix.toString())
     }
 
     private fun setVisibleClearIcon(visible: Boolean) {
-        clearDrawable?.setVisible(visible, false)
-        tv_postfix.setCompoundDrawables(null, null, if (visible) clearDrawable else null, null)
+        iv_clear.apply {
+            visibility = if(visible) View.VISIBLE else View.INVISIBLE
+            setOnClickListener { editText.setText("0") }
+        }
     }
 }

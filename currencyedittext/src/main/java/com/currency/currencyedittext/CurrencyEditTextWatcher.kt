@@ -19,7 +19,7 @@ import java.text.DecimalFormat
  */
 class CurrencyEditTextWatcher(
     private val editView : EditText,
-    private val clearIcon : (Boolean) -> Unit
+    private val setVisibleClearIcon : (Boolean) -> Unit
 ) : TextWatcher {
 
     var beforeChar = ""
@@ -31,20 +31,30 @@ class CurrencyEditTextWatcher(
     }
 
     override fun onTextChanged(char: CharSequence?, start: Int, before: Int, count: Int) {
-        char?.toString().let {
-            if(it != beforeChar && it?.isNotEmpty() == true) {
+        changeText(char?.toString())
+        clearIcon()
+    }
+
+    private fun changeText(text : String?) {
+        text?.let {
+            if(it.isEmpty()) {
+                editView.setText("0")
+            }
+            else if(it != beforeChar) {
                 it.extractNumber().toDouble().let { value ->
                     editView.setText(DecimalFormat("###,###").format(value))
                     //// TODO: 2019-10-12 선택한 포지션 설정
                     editView.setSelection(editView.length())
                 }
             }
-        }
-        if(editView.hasFocus()) {
-            clearIcon.invoke(editView.length() > 0)
-//            clearIcon(editView.length() > 0)
+
         }
     }
 
+    private fun clearIcon() {
+        if(editView.hasFocus()) {
+            setVisibleClearIcon.invoke(editView.length() > 0 && editView.text.toString() != "0")
+        }
+    }
 }
 
