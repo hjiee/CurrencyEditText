@@ -7,8 +7,13 @@ class TextFocusListener(
     private val clearIcon : (Boolean) -> Unit
 ) : View.OnFocusChangeListener {
     override fun onFocusChange(view: View?, hasFocus: Boolean) {
+        (view as EditText).setSelection(view.length())
         when(hasFocus) {
-            true -> clearIcon((view as EditText).text?.length!! > 0)
+            // 포커스가 있을 경우
+            true -> {
+                clearIcon((view).text?.length!! > 0 && (view).text.toString() != "0")
+            }
+            //
             false -> clearIcon(false)
         }
     }

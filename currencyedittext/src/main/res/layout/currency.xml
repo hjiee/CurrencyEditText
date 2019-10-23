@@ -19,7 +19,9 @@
         android:id="@+id/edt_money"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:inputType="numberDecimal"
+        android:background="@null"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
         app:layout_constraintLeft_toRightOf="@+id/tv_prefix"
         app:layout_constraintRight_toLeftOf="@+id/tv_postfix" />
 
@@ -29,7 +31,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="@+id/edt_money"
-        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintRight_toLeftOf="@+id/iv_clear"
         app:layout_constraintLeft_toRightOf="@id/edt_money"
         app:layout_constraintTop_toTopOf="@+id/edt_money" />
 
