@@ -47,7 +47,6 @@ class CurrencyEditTextWatcher(
                     editView.setSelection(editView.length())
                 }
             }
-
         }
     }
 

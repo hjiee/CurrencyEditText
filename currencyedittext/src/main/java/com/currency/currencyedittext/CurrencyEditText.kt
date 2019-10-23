@@ -2,6 +2,7 @@ package com.currency.currencyedittext
 
 import android.content.Context
 import android.content.res.TypedArray
+import android.graphics.Color
 import android.text.InputType
 import android.util.AttributeSet
 import android.view.LayoutInflater
@@ -51,17 +52,22 @@ class CurrencyEditText : ConstraintLayout {
     private fun initView() {
         addView(parentView)
         setVisibleClearIcon(false)
-        editText.inputType = 8194 // Number Decimal
+        editText.apply {
+            inputType = 8194 // Number Decimal
+
+            // Text 변경 이벤트
+            addTextChangedListener(
+                CurrencyEditTextWatcher(editText) {
+                    setVisibleClearIcon(it)
+                })
+            // Text 포커스 이벤트
+            onFocusChangeListener =
+                TextFocusListener { setVisibleClearIcon(it) }
+        }
 
 
-        // Text 변경 이벤트
-        editText.addTextChangedListener(
-            CurrencyEditTextWatcher(editText) {
-                setVisibleClearIcon(it)
-            })
-        // Text 포커스 이벤트
-        onFocusChangeListener =
-            TextFocusListener { setVisibleClearIcon(it) }
+
+
     }
 
     private fun getAttrs(attributeSet: AttributeSet) {
