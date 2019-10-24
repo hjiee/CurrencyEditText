@@ -3,7 +3,7 @@ package com.currency.currencyedittext
 enum class CurrencyEnum(val code : String, val symbol : String, val currencyName : String) {
     AED("0x784","د.إ","디르함"),
     AFN("0x971","Af","아프가니"),
-    ALL("0x008","L","렉"),
+    ALL("ttass","L","렉"),
     AMD("0x051","Դ","드람"),
     AOA("0x973","Kz","콴자"),
     ARS("0x032","$","소"),
@@ -153,3 +153,4 @@ enum class CurrencyEnum(val code : String, val symbol : String, val currencyName
     ZMW("0x967","ZK","크와차"),
     ZWL("0x932","$","달러"),
 }
+
