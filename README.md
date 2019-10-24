@@ -1,4 +1,5 @@
 [![](https://jitpack.io/v/hjiee/CurrencyEditText.svg)](https://jitpack.io/#hjiee/CurrencyEditText)
+![](https://img.shields.io/badge/API-15+-blue)
 
 # CurrencyEditText
 
@@ -11,29 +12,31 @@ To get a Git project into your build:
 ### Step 1. Add the JitPack repository to your build file. 
 
 Add it in your root build.gradle at the end of repositories:
-
-	allprojects {
-		repositories {
-			...
-			maven { url 'https://jitpack.io' }
-		}
+```gradle
+allprojects {
+	repositories {
+		...
+		maven { url 'https://jitpack.io' }
 	}
-	
+}
+```
+
 ### Step 2. Add the dependency
-
-	dependencies {
-	        implementation 'com.github.hjiee:CurrencyEditText:1.0.0'
-	}
-
+```gradle
+dependencies {
+	implementation 'com.github.hjiee:CurrencyEditText:1.0.0'
+}
+```
 
 ### Step 3. Add the preFix and postFix in Xml files
+```gradle
+<com.currency.currencyedittext.CurrencyEditText
+	android:layout_width="wrap_content"
+	android:layout_height="wrap_content"
+	app:preFix="KRW"
+	app:postFix="KRW"/>
+```
 
-    <com.currency.currencyedittext.CurrencyEditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:preFix="KRW"
-        app:postFix="KRW"/>
-        
 ## :pushpin:preFix & postFix
 search => https://justforex.com/ko/education/currencies   
 
