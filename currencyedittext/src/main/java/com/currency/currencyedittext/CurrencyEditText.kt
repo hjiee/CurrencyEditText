@@ -47,6 +47,7 @@ class CurrencyEditText : ConstraintLayout {
     ) : super(context, attributeSet, defStyleAttr) {
         initView()
         getAttrs(attributeSet, defStyleAttr)
+
     }
 
     private fun initView() {
