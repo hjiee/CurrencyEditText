@@ -24,7 +24,7 @@ allprojects {
 ### Step 2. Add the dependency
 ```gradle
 dependencies {
-	implementation 'com.github.hjiee:CurrencyEditText:1.0.0'
+	implementation 'com.github.hjiee:CurrencyEditText:1.0.1'
 }
 ```
 
